@@ -11,8 +11,10 @@ public class Player extends GameObject{
 	}
 	
 	public void tick(){
-		
+		x += velx;
+		y += vely;
 	}
+
 	
 	public void render(Graphics g){
 		g.setColor(Color.BLACK);

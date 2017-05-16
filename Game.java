@@ -17,9 +17,12 @@ public class Game extends Canvas implements Runnable{
 	
 	public Game(){
 		handler = new Handler();
-		handler.addObject(new Player(WIDTH / 2, HEIGHT - 60, ID.Player));
+		this.addKeyListener(new KeyInput(handler));
 		
 		new Window(WIDTH, HEIGHT, "Frogger", this);
+		System.out.println(WIDTH + " " + HEIGHT);
+		
+		handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player));
 	}
 	
 	public synchronized void start(){
@@ -43,6 +46,7 @@ public class Game extends Canvas implements Runnable{
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		int frames = 0;
 		while(running){
 			long now = System.nanoTime();
@@ -58,7 +62,7 @@ public class Game extends Canvas implements Runnable{
 			
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				System.out.println("FPS: " + frames);
+				//System.out.println("FPS: " + frames);
 				frames = 0;
 			}
 		}
