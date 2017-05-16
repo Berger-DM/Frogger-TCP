@@ -9,7 +9,7 @@ public class Game extends Canvas implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+	public static final int WIDTH = 672, HEIGHT = 416;
 	private Thread thread;
 	private boolean running = false;
 	
@@ -18,11 +18,10 @@ public class Game extends Canvas implements Runnable{
 	public Game(){
 		handler = new Handler();
 		this.addKeyListener(new KeyInput(handler));
-		
 		new Window(WIDTH, HEIGHT, "Frogger", this);
-		System.out.println(WIDTH + " " + HEIGHT);
 		
-		handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player));
+		handler.addObject(new Player(320, HEIGHT - 96, ID.Player));
+		//handler.addObject(new Car(WIDTH / 2 - 64, HEIGHT / 2 - 64, ID.Car));
 	}
 	
 	public synchronized void start(){
@@ -82,8 +81,30 @@ public class Game extends Canvas implements Runnable{
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		g.setColor(Color.RED);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT / 13);
+
+		g.setColor(Color.BLUE);
+		g.fillRect(0, 32, WIDTH, HEIGHT / 13 * 4);
+		
+		g.setColor(Color.GREEN);
+		for(int i = 0; i < WIDTH; i += 64){
+			g.fillRect(i, 32, 32, 32);
+		}
+		for(int i = 32; i <= WIDTH; i+= 64){
+			g.fillArc(i, 32, 31, 31, 0, 360);
+		}
+		
+		g.fillRect(0, 160, WIDTH, HEIGHT / 13);
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 192, WIDTH, HEIGHT / 13 * 4);
+		
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 320, WIDTH, HEIGHT / 13);
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 352, WIDTH, HEIGHT / 13 + 10);
 		
 		handler.render(g);
 		

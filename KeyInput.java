@@ -20,10 +20,10 @@ public class KeyInput extends KeyAdapter{
 			if(tempObject.getId() == ID.Player){
 				//key events for player 1
 				
-				if(key == KeyEvent.VK_W) tempObject.setVely(-2);
-				if(key == KeyEvent.VK_A) tempObject.setVelx(-2);
-				if(key == KeyEvent.VK_S) tempObject.setVely(2);
-				if(key == KeyEvent.VK_D) tempObject.setVelx(2);
+				if(key == KeyEvent.VK_W) tempObject.setY(tempObject.getY() - 32);
+				if(key == KeyEvent.VK_A) tempObject.setX(tempObject.getX() - 32);
+				if(key == KeyEvent.VK_S) tempObject.setY(tempObject.getY() + 32);
+				if(key == KeyEvent.VK_D) tempObject.setX(tempObject.getX() + 32);
 			}
 		}
 	}
