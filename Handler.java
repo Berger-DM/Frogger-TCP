@@ -1,6 +1,7 @@
 package com.frogger;
 
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.util.LinkedList;
 
 public class Handler {
@@ -11,8 +12,14 @@ public class Handler {
 		for(int i = 0; i < object.size(); i++){
 			GameObject tempObject = object.get(i);
 			
+			if(tempObject.x > Game.WIDTH){
+				removeObject(tempObject);
+				System.out.println("Objeto removido");
+			}
 			tempObject.tick();
 		}
+		
+		Toolkit.getDefaultToolkit().sync();
 	}
 	
 	public void render(Graphics g){
@@ -21,6 +28,8 @@ public class Handler {
 			
 			tempObject.render(g);
 		}
+		
+		Toolkit.getDefaultToolkit().sync();
 	}
 	
 	public void addObject(GameObject object){

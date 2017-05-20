@@ -3,6 +3,7 @@ package com.frogger;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable{
@@ -14,14 +15,16 @@ public class Game extends Canvas implements Runnable{
 	private boolean running = false;
 	
 	private Handler handler;
+	private HUD hud;
 	
 	public Game(){
 		handler = new Handler();
 		this.addKeyListener(new KeyInput(handler));
 		new Window(WIDTH, HEIGHT, "Frogger", this);
+		hud = new HUD();
 		
-		handler.addObject(new Player(320, HEIGHT - 96, ID.Player));
-		//handler.addObject(new Car(WIDTH / 2 - 64, HEIGHT / 2 - 64, ID.Car));
+		handler.addObject(new Player(320, HEIGHT - 96, ID.Player, handler));
+		handler.addObject(new Car(0, 228, ID.Car));
 	}
 	
 	public synchronized void start(){
@@ -40,6 +43,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void run(){
+		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -70,6 +74,9 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick(){
 		handler.tick();
+		hud.tick();
+		
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	private void render(){
@@ -81,6 +88,19 @@ public class Game extends Canvas implements Runnable{
 		
 		Graphics g = bs.getDrawGraphics();
 		
+		drawBG(g);
+		
+		handler.render(g);
+		
+		hud.render(g);
+		
+		g.dispose();
+		bs.show();
+		
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
+	public void drawBG(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT / 13);
 
@@ -105,11 +125,15 @@ public class Game extends Canvas implements Runnable{
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 352, WIDTH, HEIGHT / 13 + 10);
-		
-		handler.render(g);
-		
-		g.dispose();
-		bs.show();
+	}
+	
+	public static int clamp(int var, int min, int max) {
+		if(var >= max)
+			return var = max;
+		else if(var <= min)
+			return var = min;
+		else
+			return var;
 	}
 	
 	public static void main(String args[]){
