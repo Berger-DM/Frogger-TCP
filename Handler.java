@@ -17,12 +17,12 @@ public class Handler {
 			if(tempObject.x > Game.WIDTH){
 				Boolean mult = r.nextBoolean();
 				if (mult) tempObject.setX(-64 - r.nextInt(10));
-				else tempObject.setX(-64 + r.nextInt(10));
+				else tempObject.setX(-64 + r.nextInt(12));
 			}
 			if(tempObject.x < -64 && tempObject.getVelx() < 0){
 				Boolean mult = r.nextBoolean();
 				if(mult) tempObject.setX(Game.WIDTH + r.nextInt(10));
-				else tempObject.setX(Game.WIDTH - r.nextInt(10));
+				else tempObject.setX(Game.WIDTH - r.nextInt(12));
 				
 			}
 			tempObject.tick();
@@ -37,7 +37,7 @@ public class Handler {
 			
 			if(tempObject.getId() == ID.Car || tempObject.getId() == ID.Log){
 				if(tempObject.getVelx() < 0) tempObject.setVelx(tempObject.getVelx() - 0.25);
-				else tempObject.setVelx(tempObject.getVelx() + 0.25);
+				else tempObject.setVelx(tempObject.getVelx() + 0.125);
 			}
 
 		}

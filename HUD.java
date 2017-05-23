@@ -1,6 +1,7 @@
 package com.frogger;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 
@@ -18,14 +19,17 @@ public class HUD {
 	}
 	
 	public void render(Graphics g){
-		g.setColor(Color.WHITE);
+		Font font = new Font("arial", 1, 24);
+		
+		g.setFont(font);
+		//g.setColor(Color.WHITE);
 		g.setColor(Color.ORANGE);
 		/*for(int i = 0; i < 96; i += 32){
 			g.fillArc(i, 0, 31, 31, 0, 360);
 		}*/
-		g.drawString("LIVES: " + lives, 10, 16);
-		g.drawString("SCORE: " + score, 606, 16);
-		g.drawString("LEVEL: " + level, 10, 376);
+		g.drawString("LIVES: " + lives, 8, 24);
+		g.drawString("SCORE: " + score, 512, 24);
+		g.drawString("LEVEL: " + level, 8, 380);
 		cur_lives = lives;
 		
 		Toolkit.getDefaultToolkit().sync();

@@ -21,7 +21,7 @@ public class Spawn {
 				handler.addObject(new Log(offset + j + r.nextInt(10), i, ID.Log, velx));
 			}
 			velx *= -1;
-			offset += 16;
+			offset += 16 * r.nextInt(4);
 		}
 		
 		offset = 16;
@@ -30,7 +30,7 @@ public class Spawn {
 				handler.addObject(new Car(offset + j + r.nextInt(10), i, ID.Car, velx));
 			}
 			velx *= -1;
-			offset += 16;
+			offset += 16 * r.nextInt(4);
 		}
 		
 		handler.addObject(new Player(320, Game.HEIGHT - 96, ID.Player, handler));

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
 	
@@ -18,6 +17,7 @@ public class Game extends Canvas implements Runnable{
 	private Handler handler;
 	private HUD hud;
 	private Spawn spawn;
+	private Menu menu;
 	
 	public enum STATE{
 		Menu,
@@ -28,14 +28,17 @@ public class Game extends Canvas implements Runnable{
 	
 	public Game(){
 		handler = new Handler();
+		menu = new Menu(this, handler);
 		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(menu);
+		
+		
 		new Window(WIDTH, HEIGHT, "Frogger", this);
 		hud = new HUD();
+		
+		
 		spawn = new Spawn(handler,hud);
 		
-		
-		//handler.addObject(new Car(0, 228, ID.Car, 2));
-		//handler.addObject(new Log(Game.WIDTH - 40, 96, ID.Log, -2));
 	}
 	
 	public synchronized void start(){
@@ -84,8 +87,13 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	private void tick(){
-		handler.tick();
-		hud.tick();
+		
+		if(gameState == STATE.Game){
+			handler.tick();
+			hud.tick();
+		}
+		
+		
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -103,7 +111,13 @@ public class Game extends Canvas implements Runnable{
 		
 		handler.render(g);
 		
-		hud.render(g);
+		if(gameState == STATE.Game){
+			hud.render(g);
+		} else if(gameState == STATE.Menu){
+			menu.render(g);
+		}
+		
+		
 		
 		g.dispose();
 		bs.show();

@@ -27,6 +27,8 @@ public class Log extends GameObject{
 	public void render(Graphics g){ 
 		g.setColor(Color.MAGENTA);
 		g.fillRect(x, y, 64, 30);
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, 64, 30);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}

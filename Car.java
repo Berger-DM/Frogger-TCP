@@ -14,7 +14,7 @@ public class Car extends GameObject{
 	}
 	
 	public Rectangle getBounds(){
-		return new Rectangle(x, y, 60, 30);
+		return new Rectangle(x, y, 60, 24);
 	}
 	
 	public void tick(){
@@ -27,6 +27,8 @@ public class Car extends GameObject{
 	public void render(Graphics g){ 
 		g.setColor(Color.RED);
 		g.fillRect(x, y, 64, 30);
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, 64, 30);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
