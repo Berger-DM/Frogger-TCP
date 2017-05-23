@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 public class Player extends GameObject{
 	
 	Handler handler;
+	private boolean midway = true;
 
 	public Player(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
@@ -21,7 +22,18 @@ public class Player extends GameObject{
 	
 	public void tick() {
 		x += velx;
-		y += vely;
+		
+		if(this.getY() == 32){
+			HUD.levelup();
+			this.setX(320);
+			this.setY(Game.HEIGHT - 96);
+			midway = true;
+		}
+		
+		if(this.getY() == 160 && midway){
+			HUD.midway();
+			midway = false;
+		}
 		
 		x = Game.clamp(x, 0, Game.WIDTH - 32);
 		y = Game.clamp(y, 32, Game.HEIGHT - 96);
@@ -34,14 +46,26 @@ public class Player extends GameObject{
 		for(int i = 0; i < handler.object.size(); i++) {
 			
 			GameObject tempObject = handler.object.get(i);
+			ID tempId = tempObject.getId();
 			
-			if(tempObject.getId() == ID.Car){
+			if(tempId == ID.Car){
 				if(this.getBounds().intersects(tempObject.getBounds())) {
-					System.out.println("YAY");
+					splat();
+				}
+			}
+			else if(tempId == ID.Log){
+				if(this.getBounds().intersects(tempObject.getBounds())) {
+					this.setVelx(tempObject.getVelx());
 				}
 			}
 		}
 
+	}
+	
+	private void splat(){
+		HUD.lives --;
+		this.setX(320);
+		this.setY(Game.HEIGHT - 96);
 	}
 	
 	

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable{
 	
@@ -16,15 +17,25 @@ public class Game extends Canvas implements Runnable{
 	
 	private Handler handler;
 	private HUD hud;
+	private Spawn spawn;
+	
+	public enum STATE{
+		Menu,
+		Game
+	};
+	
+	public STATE gameState = STATE.Menu;
 	
 	public Game(){
 		handler = new Handler();
 		this.addKeyListener(new KeyInput(handler));
 		new Window(WIDTH, HEIGHT, "Frogger", this);
 		hud = new HUD();
+		spawn = new Spawn(handler,hud);
 		
-		handler.addObject(new Player(320, HEIGHT - 96, ID.Player, handler));
-		handler.addObject(new Car(0, 228, ID.Car));
+		
+		//handler.addObject(new Car(0, 228, ID.Car, 2));
+		//handler.addObject(new Log(Game.WIDTH - 40, 96, ID.Log, -2));
 	}
 	
 	public synchronized void start(){
