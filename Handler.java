@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 import java.util.LinkedList;
 import java.util.Random;
 
+import com.frogger.Game.STATE;
+
 public class Handler {
 
 	static LinkedList<GameObject> object = new LinkedList<GameObject>();

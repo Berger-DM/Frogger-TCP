@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
+import com.frogger.Game.STATE;
+
 public class Player extends GameObject{
 	
 	Handler handler;
@@ -23,22 +25,30 @@ public class Player extends GameObject{
 	public void tick() {
 		x += velx;
 		
-		if(this.getY() == 32){
+		int cur_Y = this.getY();
+		
+		if(cur_Y == 32){
 			HUD.levelup();
 			this.setX(320);
 			this.setY(Game.HEIGHT - 96);
 			midway = true;
 		}
 		
-		if(this.getY() == 160 && midway){
+		if(cur_Y == 160 && midway){
 			HUD.midway();
 			midway = false;
 		}
 		
+
 		x = Game.clamp(x, 0, Game.WIDTH - 32);
 		y = Game.clamp(y, 32, Game.HEIGHT - 96);
 		
 		collision();
+		
+		if(cur_Y < 160 && cur_Y > 32){
+			if(this.getVelx() < 1) splat();
+		}
+		
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
@@ -64,6 +74,10 @@ public class Player extends GameObject{
 	
 	private void splat(){
 		HUD.lives --;
+		if(HUD.lives < 1) {
+			HUD.gameOver();
+			Game.gameState = STATE.Over;
+		}
 		this.setX(320);
 		this.setY(Game.HEIGHT - 96);
 	}

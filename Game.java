@@ -21,20 +21,22 @@ public class Game extends Canvas implements Runnable{
 	
 	public enum STATE{
 		Menu,
-		Game
+		Game,
+		Highscore,
+		Over
 	};
 	
-	public STATE gameState = STATE.Menu;
+	public static STATE gameState = STATE.Menu;
 	
 	public Game(){
 		handler = new Handler();
-		menu = new Menu(this, handler);
+		hud = new HUD();
+		menu = new Menu(this, handler, hud);
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(menu);
 		
 		
 		new Window(WIDTH, HEIGHT, "Frogger", this);
-		hud = new HUD();
 		
 		
 		spawn = new Spawn(handler,hud);
@@ -93,6 +95,10 @@ public class Game extends Canvas implements Runnable{
 			hud.tick();
 		}
 		
+		if(gameState == STATE.Menu || gameState == STATE.Over){
+			menu.tick();
+		}
+		
 		
 		
 		Toolkit.getDefaultToolkit().sync();
@@ -113,7 +119,7 @@ public class Game extends Canvas implements Runnable{
 		
 		if(gameState == STATE.Game){
 			hud.render(g);
-		} else if(gameState == STATE.Menu){
+		} else if(gameState == STATE.Menu || gameState == STATE.Over){
 			menu.render(g);
 		}
 		

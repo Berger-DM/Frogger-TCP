@@ -12,9 +12,11 @@ public class Menu extends MouseAdapter{
 	
 	private Game game;
 	private Handler handler;
+	private HUD hud;
 	
-	public Menu(Game game, Handler handler){
+	public Menu(Game game, Handler handler, HUD hud){
 		this.game = game;
+		this.hud = hud;
 		this.handler = handler;
 	}
 
@@ -45,31 +47,41 @@ public class Menu extends MouseAdapter{
 	}
 	
 	public void render(Graphics g){
+		
 		Font font = new Font("arial", 1, 50);
 		Font font2 = new Font("arial", 1, 24);
 		
-		g.setFont(font);
-		g.setColor(Color.BLACK);
-		g.drawString("Menu", 270, 106);
 		
-		g.setFont(font2);
+		if(Game.gameState == STATE.Menu){
+			g.setFont(font);
+			g.setColor(Color.WHITE);
+			g.drawString("Frogger", 240, 106);
+			
+			g.setFont(font2);
+			
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(236, 127, 200, 32);
+			g.setColor(Color.BLACK);
+			g.drawRect(236, 127, 200, 32);
+			g.drawString("Play", Game.WIDTH/2 - 24, 149);
+				
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(236, 192, 200, 32);
+			g.setColor(Color.BLACK);
+			g.drawRect(236, 192, 200, 32);
+			g.drawString("Highscores", Game.WIDTH/2 - 60, 214);
+			
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(236, 256, 200, 32);
+			g.setColor(Color.BLACK);
+			g.drawRect(236, 256, 200, 32);
+			g.drawString("Quit", Game.WIDTH/2 - 24, 278);
+		} else if(Game.gameState == STATE.Over){
+			g.setFont(font);
+			g.setColor(Color.WHITE);
+			g.drawString("GAME OVER", 180, 106);
+			g.drawString("Your Score: " + hud.getScore(), 150, 200);
+		}
 		
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(236, 127, 200, 32);
-		g.setColor(Color.BLACK);
-		g.drawRect(236, 127, 200, 32);
-		g.drawString("Play", Game.WIDTH/2 - 24, 149);
-		
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(236, 192, 200, 32);
-		g.setColor(Color.BLACK);
-		g.drawRect(236, 192, 200, 32);
-		g.drawString("Highscores", Game.WIDTH/2 - 60, 214);
-		
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(236, 256, 200, 32);
-		g.setColor(Color.BLACK);
-		g.drawRect(236, 256, 200, 32);
-		g.drawString("Quit", Game.WIDTH/2 - 24, 278);
 	}
 }

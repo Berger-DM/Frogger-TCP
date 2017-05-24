@@ -11,10 +11,11 @@ public class HUD {
 	
 	private static int score = 0;
 	private static int level = 1;
-	private static int cur_lives;
+	private static int cur_lives = 3;
+	
 	
 	public void tick(){
-		if(lives < 1) System.exit(0);
+		if(lives < 1) gameOver();
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
@@ -22,15 +23,10 @@ public class HUD {
 		Font font = new Font("arial", 1, 24);
 		
 		g.setFont(font);
-		//g.setColor(Color.WHITE);
 		g.setColor(Color.ORANGE);
-		/*for(int i = 0; i < 96; i += 32){
-			g.fillArc(i, 0, 31, 31, 0, 360);
-		}*/
 		g.drawString("LIVES: " + lives, 8, 24);
 		g.drawString("SCORE: " + score, 512, 24);
 		g.drawString("LEVEL: " + level, 8, 380);
-		cur_lives = lives;
 		
 		Toolkit.getDefaultToolkit().sync();
 		
@@ -48,6 +44,14 @@ public class HUD {
 		if(cur_lives != lives) score += 10;
 		else score += 20;
 	}
+	
+	public static void gameOver(){
+		for(int i = 0; i < Handler.object.size(); i++){
+			Handler.object.remove();	
+		}
+		//Game.gameState = STATE.Over;
+	}
+	
 	
 	public void score(int score){
 		this.score = score;	
