@@ -7,7 +7,7 @@ public abstract class GameObject {
 
 	protected int x, y;
 	protected ID id;
-	protected int velx, vely;
+	protected double velx, vely;
 	
 	public GameObject(int x, int y, ID id){
 		this.x = x;
@@ -37,16 +37,16 @@ public abstract class GameObject {
 	public ID getId(){
 		return id;
 	}
-	public void setVelx(int velX){
-		this.velx = velX;
+	public void setVelx(double d){
+		this.velx = d;
 	}
 	public void setVely(int velY){
 		this.vely = velY;
 	}
-	public int getVelx(){
+	public double getVelx(){
 		return velx;
 	}
-	public int getVely(){
+	public double getVely(){
 		return vely;
 	}
 }

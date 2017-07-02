@@ -7,24 +7,25 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Car extends GameObject{
-
-        private Random r = new Random();
-	private int carsize = 50;
-	private BufferedImage car_image;
+public class Log extends GameObject{
 	
-	public Car(int x, int y, ID id, double velx){
+	private Random r = new Random();
+	private int logsize = 85;
+	private BufferedImage log_image;
+
+	public Log(int x, int y, ID id, double velx){
 		super(x, y, id);
 		
 		this.velx = velx;
-                
+		//this.logsize = 60 + r.nextInt(40);
+		
 		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
 		
-		car_image = ss.grabImage(1, carsize, 32);
+		log_image = ss.grabImage(3, 85, 32);
 	}
 	
 	public Rectangle getBounds(){
-		return new Rectangle(x, y, carsize, 24);
+		return new Rectangle(x, y, logsize, 32);
 	}
 	
 	public void tick(){
@@ -35,10 +36,12 @@ public class Car extends GameObject{
 	}
 	
 	public void render(Graphics g){ 
-
-		g.drawImage(car_image, x, y, null);
+		//g.setColor(Color.MAGENTA);
+		//g.fillRect(x, y, logsize, 30);
+		//g.setColor(Color.BLACK);
+		//g.drawRect(x, y, logsize, 30);
+		g.drawImage(log_image, x, y, null);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}
-
 }
