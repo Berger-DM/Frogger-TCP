@@ -20,13 +20,26 @@ public class KeyInput extends KeyAdapter{
 			if(tempObject.getId() == ID.Player){
 				//key events for player 1
 				
-				if(key == KeyEvent.VK_W) tempObject.setY(tempObject.getY() - 32);
-				if(key == KeyEvent.VK_A) tempObject.setX(tempObject.getX() - 32);
-				if(key == KeyEvent.VK_S) tempObject.setY(tempObject.getY() + 32);
-				if(key == KeyEvent.VK_D) tempObject.setX(tempObject.getX() + 32);
+				if(key == KeyEvent.VK_W){
+					tempObject.setY(tempObject.getY() - 32);
+					tempObject.setVelx(0);
+				}
+				if(key == KeyEvent.VK_A){
+					tempObject.setX(tempObject.getX() - 32);
+					tempObject.setVelx(0);
+				}
+				if(key == KeyEvent.VK_S){
+					tempObject.setY(tempObject.getY() + 32);
+					tempObject.setVelx(0);
+				}
+				if(key == KeyEvent.VK_D){
+					tempObject.setX(tempObject.getX() + 32);
+					tempObject.setVelx(0);
+				}
 			}
 		}
 		
+
 		if(key == KeyEvent.VK_ESCAPE) System.out.println("Sair do Jogo");
 	}
 	

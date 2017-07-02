@@ -3,5 +3,8 @@ package com.frogger;
 public enum ID {
 
 	Player(),
-	Car();
+	Log(),
+	Turtle(),
+	Car(),
+	Truck();
 }
