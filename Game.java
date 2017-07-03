@@ -5,32 +5,71 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Game extends Canvas implements Runnable{
 	
+     
+    
 	private static final long serialVersionUID = 1L;
 	
 	public static final int WIDTH = 672, HEIGHT = 416;
 	private Thread thread;
 	private boolean running = false;
 	
+	public static boolean paused = false;
+	
 	private Handler handler;
 	private HUD hud;
 	private Spawn spawn;
 	private Menu menu;
+  public static HighScores highscore /*highscore*/ = new HighScores();
+  public static Files file;
+
 	
 	public enum STATE{
 		Menu,
 		Game,
 		Highscore,
 		Over
+	};       
+              
+	public static STATE gameState = STATE.Menu;
+	
+	public static BufferedImage sprite_sheet;
 	};
 	
 	public static STATE gameState = STATE.Menu;
-	
-	public Game(){
+	public Game() throws FileNotFoundException{
+		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		sprite_sheet = loader.loadImage("/spritesheet.png");
+		
 		handler = new Handler();
 		hud = new HUD();
+                
+		menu = new Menu(this, handler, hud, highscore);
+		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(menu);
+                
+                //MUDAR DEPOIS
+                
+    file = new Files();
+    if(!(file.exists())){
+    file.createsFile();
+    file.initializesScoresFile();
+    }
+                
+    highscore.initializesHighScores();
+                
+		new Window(WIDTH, HEIGHT, "Frogger", this);	                
+                
+		spawn = new Spawn(handler,hud);
+		
 		menu = new Menu(this, handler, hud);
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(menu);
@@ -132,30 +171,12 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void drawBG(Graphics g){
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT / 13);
-
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 32, WIDTH, HEIGHT / 13 * 4);
-		
-		g.setColor(Color.GREEN);
-		for(int i = 0; i < WIDTH; i += 64){
-			g.fillRect(i, 32, 32, 32);
+		BufferedImage bg_image;
+		SpriteSheet ss = new SpriteSheet(sprite_sheet);
+		bg_image = ss.grabImage(6, 224, 416);
+		for(int i = 0; i < 4; i++){
+			g.drawImage(bg_image, i * 224, 0, null);
 		}
-		for(int i = 32; i <= WIDTH; i+= 64){
-			g.fillArc(i, 32, 31, 31, 0, 360);
-		}
-		
-		g.fillRect(0, 160, WIDTH, HEIGHT / 13);
-		
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 192, WIDTH, HEIGHT / 13 * 4);
-		
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 320, WIDTH, HEIGHT / 13);
-		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 352, WIDTH, HEIGHT / 13 + 10);
 	}
 	
 	public static int clamp(int var, int min, int max) {
@@ -167,8 +188,10 @@ public class Game extends Canvas implements Runnable{
 			return var;
 	}
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws FileNotFoundException{
+         
 		new Game();
+
 	}
 	
 }

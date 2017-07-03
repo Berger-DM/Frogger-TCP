@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.Scanner;
 
 public class HUD {
 
@@ -12,8 +13,25 @@ public class HUD {
 	private static int score = 0;
 	private static int level = 1;
 	private static int cur_lives = 3;
+        private static HighScores highscore = new HighScores();
+        private static Files file = new Files();
+        private Scanner userInput = new Scanner(System.in);
+        private String playerName;
 	
 	
+	public void tick(){
+		if(lives < 1){
+                   gameOver();                   
+                   
+                   if(score > Game.highscore.scores[HighScores.MAX_SCORES - 1]){
+                       
+                        //playerName = userInput.nextLine();
+                        Game.highscore.updateHighScores("playerName", score);
+                        Game.file.updatesScoresFile(Game.highscore.names, Game.highscore.scores);
+                   }
+                   Toolkit.getDefaultToolkit().sync();
+                }
+
 	public void tick(){
 		if(lives < 1) gameOver();
 		Toolkit.getDefaultToolkit().sync();
@@ -47,6 +65,11 @@ public class HUD {
 	
 	public static void gameOver(){
 		for(int i = 0; i < Handler.object.size(); i++){
+
+                    Handler.object.remove();
+		}
+                
+               // Game.gameState = STATE.Over;
 			Handler.object.remove();	
 		}
 		//Game.gameState = STATE.Over;

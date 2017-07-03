@@ -4,5 +4,9 @@ public enum ID {
 
 	Player(),
 	Log(),
+	Turtle(),
+	Car(),
+	Truck();
 	Car();
+
 }

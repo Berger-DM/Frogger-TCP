@@ -39,6 +39,7 @@ public class KeyInput extends KeyAdapter{
 			}
 		}
 		
+
 		if(key == KeyEvent.VK_ESCAPE) System.out.println("Sair do Jogo");
 	}
 	
