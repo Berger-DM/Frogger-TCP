@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Scanner;
-
 
 import com.frogger.Game.STATE;
 
@@ -15,10 +13,6 @@ public class Menu extends MouseAdapter{
 	private Game game;
 	private Handler handler;
 	private HUD hud;
-  private HighScores highscores;
-	
-	public Menu(Game game, Handler handler, HUD hud, HighScores highscores){
-                this.highscores = highscores;
 	
 	public Menu(Game game, Handler handler, HUD hud){
 		this.game = game;
@@ -83,21 +77,6 @@ public class Menu extends MouseAdapter{
 			g.drawRect(236, 256, 200, 32);
 			g.drawString("Quit", Game.WIDTH/2 - 24, 278);
 		} else if(Game.gameState == STATE.Over){
-                        if(highscores.getScore(9) < hud.getScore()){
-                            g.setFont(font);
-                            g.setColor(Color.WHITE);
-                            g.drawString("GAME OVER", 180, 106);
-                            g.drawString("HIGH SCORE!!!", 150, 200);
-                            g.drawString("" + hud.getScore(), Game.WIDTH/2, 250);
-                            g.drawString("PLAYER NAME: ", Game.WIDTH/6, 300);    
-                        }
-                        else{
-                            g.setFont(font);
-                            g.setColor(Color.WHITE);
-                            g.drawString("GAME OVER", 180, 106);
-                            g.drawString("Your Score: " + hud.getScore(), 150, 200);
-                        }
-
 			g.setFont(font);
 			g.setColor(Color.WHITE);
 			g.drawString("GAME OVER", 180, 106);

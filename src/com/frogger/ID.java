@@ -7,6 +7,4 @@ public enum ID {
 	Turtle(),
 	Car(),
 	Truck();
-	Car();
-
 }

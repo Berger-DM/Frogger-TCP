@@ -8,14 +8,12 @@ import java.awt.image.BufferedImage;
 
 import com.frogger.Game.STATE;
 
-import com.frogger.Game.STATE;
-
 public class Player extends GameObject{
 	
 	Handler handler;
 	private boolean midway = true;
-
 	private boolean log_col = false;
+	
 	private BufferedImage player_image;
 
 	public Player(int x, int y, ID id, Handler handler, boolean log_col) {
@@ -61,44 +59,28 @@ public class Player extends GameObject{
 		}
 		
 		this.setLogCol(false);
-			if(this.getVelx() < 1) splat();
-		}
-		
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
 	private void collision() {
-            for (GameObject tempObject : handler.object) {
-                ID tempId = tempObject.getId();
-                
-                if(tempId == ID.Car || tempId == ID.Truck){
-                    if(this.getBounds().intersects(tempObject.getBounds())) {
-                        splat();
-                    }
-                }
-                else if(tempId == ID.Log || tempId == ID.Turtle){
-                    if(this.getBounds().intersects(tempObject.getBounds())) {
-                        log_col = true;
-                        this.setVelx(tempObject.getVelx());
-                    }
-                }
-            }
 		for(int i = 0; i < handler.object.size(); i++) {
 			
 			GameObject tempObject = handler.object.get(i);
 			ID tempId = tempObject.getId();
 			
-			if(tempId == ID.Car){
+			if(tempId == ID.Car || tempId == ID.Truck){
 				if(this.getBounds().intersects(tempObject.getBounds())) {
 					splat();
 				}
 			}
-			else if(tempId == ID.Log){
+			else if(tempId == ID.Log || tempId == ID.Turtle){
 				if(this.getBounds().intersects(tempObject.getBounds())) {
+					log_col = true;
 					this.setVelx(tempObject.getVelx());
 				}
 			}
 		}
+
 	}
 	
 	private void splat(){
@@ -111,7 +93,7 @@ public class Player extends GameObject{
 		this.setX(320);
 		this.setY(Game.HEIGHT - 96);
 	}
-
+	
 	public boolean getLogCol(){
 		return log_col;
 	}

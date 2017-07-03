@@ -71,25 +71,5 @@ public class Spawn {
 		}
 		
 		handler.addObject(new Player(320, Game.HEIGHT - 96, ID.Player, handler, false));
-		int offset = 16;
-		for(int i = 64; i < 129; i += 32){
-			for(int j = 0; j < Game.WIDTH; j += 190){
-				handler.addObject(new Log(offset + j + r.nextInt(10), i, ID.Log, velx));
-			}
-			velx *= -1;
-			offset += 16 * r.nextInt(4);
-		}
-		
-		offset = 16;
-		for(int i = 192; i < 289; i += 32){
-			for(int j = 0; j < Game.WIDTH; j += 190){
-				handler.addObject(new Car(offset + j + r.nextInt(10), i, ID.Car, velx));
-			}
-			velx *= -1;
-			offset += 16 * r.nextInt(4);
-		}
-		
-		handler.addObject(new Player(320, Game.HEIGHT - 96, ID.Player, handler));
-
 	}
 }
