@@ -6,11 +6,13 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
 import com.frogger.Game.STATE;
 
 public class Menu extends MouseAdapter{
 	
-	private Game game;
+	private static Game game;
 	private Handler handler;
 	private HUD hud;
 	
@@ -24,14 +26,29 @@ public class Menu extends MouseAdapter{
 		int mx = e.getX();
 		int my = e.getY();
 		
-		if(mouseOver(mx, my, 236, 127, 200, 32)){
+		if(mouseOver(mx, my, 236, 127, 200, 32) && Game.gameState == STATE.Menu){
 			game.gameState = STATE.Game;
 		}
+		
+		if(mouseOver(mx, my, 236, 192, 200, 32) && Game.gameState == STATE.Menu){
+			game.gameState = STATE.Highscore;
+			showHighscore();
+			game.gameState = STATE.Menu;
+		}
+		
+		if(mouseOver(mx, my, 236, 256, 200, 32) && Game.gameState == STATE.Menu){
+			System.exit(0);
+		}
+	}
+
+	public static void showHighscore() {
+		String msg = "";
+		for (int i = 0; i < game.hs.length; i++){
+			msg += Integer.toString(i + 1) + ". " + game.hs[i].name + " - " + game.hs[i].score + "\n";
+		}
+		JOptionPane.showMessageDialog(game, msg);
 	}
 	
-	public void mouseReleased(MouseEvent e){
-		
-	}
 	
 	private boolean mouseOver(int mx, int my, int x, int y, int width, int height){
 		if(mx > x && mx < x + width){

@@ -5,27 +5,36 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+
 
 public class Car extends GameObject{
 	
-	private Random r = new Random();
 	private int carsize = 50;
-	private BufferedImage car_image;
+	private BufferedImage car_image, i_car_img;
+	private boolean crazy;
 	
-	public Car(int x, int y, ID id, double velx){
+	public Car(int x, int y, ID id, double velx, boolean crazy){
 		super(x, y, id);
 		
 		this.velx = velx;
-		//this.carsize = 60 + r.nextInt(20);
+		this.crazy = crazy;
 		
 		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
 		
-		car_image = ss.grabImage(1, carsize, 32);
+		car_image = ss.grabImage(0, 2, carsize, 32);
+		i_car_img = ss.grabImage(50, 2, carsize, 32);
 	}
 	
 	public Rectangle getBounds(){
-		return new Rectangle(x, y, carsize, 24);
+		return new Rectangle(x, y, carsize - 6, 24);
+	}
+	
+	public boolean getCrazy(){
+		return this.crazy;
+	}
+	
+	public void setCrazy(boolean b){
+		this.crazy = b;
 	}
 	
 	public void tick(){
@@ -36,11 +45,10 @@ public class Car extends GameObject{
 	}
 	
 	public void render(Graphics g){ 
-		//g.setColor(Color.RED);
-		//g.fillRect(x, y, carsize, 30);
-		//g.setColor(Color.BLACK);
-		//g.drawRect(x, y, carsize, 30);
-		g.drawImage(car_image, x, y, null);
+		if(velx > 0)
+			g.drawImage(i_car_img, x, y, null);
+		else
+			g.drawImage(car_image, x, y, null);
 		
 		Toolkit.getDefaultToolkit().sync();
 	}

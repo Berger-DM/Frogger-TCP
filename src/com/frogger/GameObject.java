@@ -22,8 +22,8 @@ public abstract class GameObject {
 	public void setX(int x){
 		this.x = x;
 	}
-	public void setY(int y){
-		this.y = y;
+	public void setY(int d){
+		this.y = d;
 	}
 	public int getX(){
 		return x;
@@ -40,8 +40,8 @@ public abstract class GameObject {
 	public void setVelx(double d){
 		this.velx = d;
 	}
-	public void setVely(int velY){
-		this.vely = velY;
+	public void setVely(double d){
+		this.vely = d;
 	}
 	public double getVelx(){
 		return velx;

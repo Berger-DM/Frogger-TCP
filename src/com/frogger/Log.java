@@ -5,11 +5,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class Log extends GameObject{
 	
-	private Random r = new Random();
 	private int logsize = 85;
 	private BufferedImage log_image;
 
@@ -21,7 +19,7 @@ public class Log extends GameObject{
 		
 		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
 		
-		log_image = ss.grabImage(3, 85, 32);
+		log_image = ss.grabImage(0, 3, 85, 32);
 	}
 	
 	public Rectangle getBounds(){
