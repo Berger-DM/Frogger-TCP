@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 
+import javax.swing.JOptionPane;
+
+import com.frogger.Game.STATE;
+
 public class HUD {
 
 	public static int lives = 3;
@@ -12,10 +16,13 @@ public class HUD {
 	private static int score = 0;
 	private static int level = 1;
 	private static int cur_lives = 3;
-	
+	private static String hs_name;
 	
 	public void tick(){
-		if(lives < 1) gameOver();
+		if(lives < 1) {
+			Game.gameState = STATE.Over;
+			
+		}
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
@@ -46,10 +53,13 @@ public class HUD {
 	}
 	
 	public static void gameOver(){
-		for(int i = 0; i < Handler.object.size(); i++){
-			Handler.object.remove();	
+		if(score > Game.low.score) {
+			hs_name = JOptionPane.showInputDialog("New Highscore! Input your name for the records!");
+			Highscore.updateHSArray(Game.hs, hs_name, score);
+			DBManager.updateHighscores(Game.hs);
+			DBManager.getHighscores(Game.hs);
 		}
-		//Game.gameState = STATE.Over;
+		Menu.showHighscore();
 	}
 	
 	

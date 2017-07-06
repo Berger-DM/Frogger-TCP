@@ -16,7 +16,7 @@ public class Truck extends GameObject{
 		
 		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
 		
-		truck_image = ss.grabImage(2, 80, 32);
+		truck_image = ss.grabImage(100, 2, 80, 32);
 	}
 
 	public void tick() {

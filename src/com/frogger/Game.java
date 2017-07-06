@@ -1,11 +1,12 @@
 package com.frogger;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class Game extends Canvas implements Runnable{
 	
@@ -21,22 +22,32 @@ public class Game extends Canvas implements Runnable{
 	private HUD hud;
 	private Spawn spawn;
 	private Menu menu;
-	
+
 	public enum STATE{
 		Menu,
 		Game,
 		Highscore,
-		Over
+		Over,
+		Pause
 	};
 	
 	public static STATE gameState = STATE.Menu;
 	
 	public static BufferedImage sprite_sheet;
 	
+	public static Highscore[] hs = new Highscore[10];
+	public static Highscore low = new Highscore();
+	
 	public Game(){
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		sprite_sheet = loader.loadImage("/spritesheet.png");
+		
+		DBManager.connect();
+		Highscore.initializeHS(hs);
+		DBManager.getHighscores(hs);
+		low = hs[9];
+		
 		
 		handler = new Handler();
 		hud = new HUD();
@@ -143,35 +154,11 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void drawBG(Graphics g){
-		/*g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT / 13);
-
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 32, WIDTH, HEIGHT / 13 * 4);
-		
-		g.setColor(Color.GREEN);
-		for(int i = 0; i < WIDTH; i += 64){
-			g.fillRect(i, 32, 32, 32);
-		}
-		for(int i = 32; i <= WIDTH; i+= 64){
-			g.fillArc(i, 32, 31, 31, 0, 360);
-		}
-		
-		g.fillRect(0, 160, WIDTH, HEIGHT / 13);
-		
-		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 192, WIDTH, HEIGHT / 13 * 4);
-		
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 320, WIDTH, HEIGHT / 13);
-		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 352, WIDTH, HEIGHT / 13 + 10);*/
 		BufferedImage bg_image;
 		SpriteSheet ss = new SpriteSheet(sprite_sheet);
-		bg_image = ss.grabImage(6, 224, 416);
+		bg_image = ss.grabImage(0, 6, 256, 416);
 		for(int i = 0; i < 4; i++){
-			g.drawImage(bg_image, i * 224, 0, null);
+			g.drawImage(bg_image, i * 256, 0, null);
 		}
 	}
 	
@@ -186,6 +173,8 @@ public class Game extends Canvas implements Runnable{
 	
 	public static void main(String args[]){
 		new Game();
+		
+		
 	}
 	
 }

@@ -17,7 +17,7 @@ public Turtle(int x, int y, ID id, double velx) {
 		
 		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
 		
-		turtle_image = ss.grabImage(4, 32, 32);
+		turtle_image = ss.grabImage(0, 4, 32, 32);
 	}
 
 
